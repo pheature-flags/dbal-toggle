@@ -64,12 +64,12 @@ final class DbalFeatureRepository implements FeatureRepository
         return DbalFeatureFactory::createFromDbalRepresentation($featureData);
     }
 
-    public function remove(FeatureId $featureId): void
+    public function remove(Feature $feature): void
     {
         $this->connection->delete(
             self::TABLE,
             [
-            'feature_id' => $featureId->value()
+                'feature_id' => $feature->id()
             ]
         );
     }
