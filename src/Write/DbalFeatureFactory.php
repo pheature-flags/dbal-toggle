@@ -27,30 +27,30 @@ final class DbalFeatureFactory
     {
         /** @var array<string, mixed> $strategiesData */
         $strategiesData = json_decode($featureData['strategies'], true, 12, JSON_THROW_ON_ERROR);
+        /** @var callable $strategyCallback */
+        $strategyCallback = static function (array $strategy): Strategy {
+            $segments = array_map(
+                static function (array $segment): Segment {
+                    /** @var array<string, mixed> $criteria */
+                    $criteria = $segment['criteria'];
+                    return new Segment(
+                        SegmentId::fromString((string)$segment['segment_id']),
+                        SegmentType::fromString((string)$segment['segment_type']),
+                        Payload::fromArray($criteria)
+                    );
+                },
+                (array)$strategy['segments']
+            );
 
-        $strategies = array_map(
-            static function (array $strategy) {
-                $segments = array_map(
-                    static function (array $segment) {
-                        /** @var array<string, mixed> $criteria */
-                        $criteria = $segment['criteria'];
-                        return new Segment(
-                            SegmentId::fromString((string)$segment['segment_id']),
-                            SegmentType::fromString((string)$segment['segment_type']),
-                            Payload::fromArray($criteria)
-                        );
-                    },
-                    (array)$strategy['segments']
-                );
+            return new Strategy(
+                StrategyId::fromString((string)$strategy['strategy_id']),
+                StrategyType::fromString((string)$strategy['strategy_type']),
+                $segments
+            );
+        };
 
-                return new Strategy(
-                    StrategyId::fromString((string)$strategy['strategy_id']),
-                    StrategyType::fromString((string)$strategy['strategy_type']),
-                    $segments
-                );
-            },
-            $strategiesData
-        );
+        /** @var Strategy[] $strategies */
+        $strategies = array_map($strategyCallback, $strategiesData);
 
         return new Feature(
             FeatureId::fromString($featureData['feature_id']),
