@@ -31,7 +31,7 @@ final class DbalFeatureFinder implements FeatureFinder
     public function get(string $featureId): Feature
     {
         $sql = <<<SQL
-            SELECT * FROM pheature_toggles WHERE feature_id = :feature_id
+        SELECT * FROM pheature_toggles WHERE feature_id = :feature_id
         SQL;
 
         $statement = $this->connection->executeQuery($sql, ['feature_id' => $featureId]);
@@ -53,7 +53,7 @@ final class DbalFeatureFinder implements FeatureFinder
     public function all(): array
     {
         $sql = <<<SQL
-            SELECT * FROM pheature_toggles ORDER BY created_at DESC
+        SELECT * FROM pheature_toggles ORDER BY created_at DESC
         SQL;
 
         $statement = $this->connection->executeQuery($sql);
