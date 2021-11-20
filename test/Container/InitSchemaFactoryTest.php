@@ -42,4 +42,25 @@ class InitSchemaFactoryTest extends TestCase
         self::assertInstanceOf(InitSchema::class, $initSchema);
     }
 
+    public function testItShouldCreateInstanceOfInitSchemaStatically(): void
+    {
+        $schema = $this->createConfiguredMock(AbstractSchemaManager::class, [
+            'createSchema' => $this->createMock(Schema::class)
+        ]);
+        $platform = $this->createMock(AbstractPlatform::class);
+        if (method_exists(Connection::class, 'createSchemaManager')) {
+            $connection = $this->createConfiguredMock(Connection::class, [
+                'createSchemaManager' => $schema,
+                'getDatabasePlatform' => $platform,
+            ]);
+        } else {
+            $connection = $this->createConfiguredMock(Connection::class, [
+                'getSchemaManager' => $schema,
+                'getDatabasePlatform' => $platform,
+            ]);
+        }
+
+        $initSchema = InitSchemaFactory::create($connection);
+        self::assertInstanceOf(InitSchema::class, $initSchema);
+    }
 }
