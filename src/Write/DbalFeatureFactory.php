@@ -19,7 +19,7 @@ use function json_decode;
 
 /**
  * @psalm-import-type WriteStrategy from \Pheature\Core\Toggle\Write\Strategy
- * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\DbalSchema
+ * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\Read\DbalFeatureFactory
  */
 final class DbalFeatureFactory
 {

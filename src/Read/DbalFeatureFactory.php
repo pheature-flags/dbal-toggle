@@ -14,7 +14,7 @@ use function json_decode;
 
 /**
  * @psalm-import-type WriteStrategy from \Pheature\Core\Toggle\Write\Strategy
- * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\DbalSchema
+ * @psalm-type DbalFeature array{feature_id: string, enabled: int, strategies: string}
  */
 final class DbalFeatureFactory
 {
