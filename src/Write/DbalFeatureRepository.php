@@ -15,7 +15,7 @@ use function json_encode;
 
 /**
  * @psalm-import-type WriteStrategy from \Pheature\Core\Toggle\Write\Strategy
- * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\DbalSchema
+ * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\Read\DbalFeatureFactory
  */
 final class DbalFeatureRepository implements FeatureRepository
 {

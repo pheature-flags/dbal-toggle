@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InitSchemaTest extends TestCase
 {
-    public function testItSgouldBeASymdonyCommand(): void
+    public function testItShouldBeASymfonyCommand(): void
     {
         $schema = $this->createConfiguredMock(Schema::class, [
             'toSql' => [],
