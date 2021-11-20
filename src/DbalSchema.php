@@ -8,6 +8,10 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\Schema;
 
+/**
+ * @psalm-import-type WriteStrategy from \Pheature\Core\Toggle\Write\Strategy
+ * @psalm-type DbalFeature array{feature_id: string, enabled: int, strategies: string}
+ */
 final class DbalSchema
 {
     private Schema $schema;

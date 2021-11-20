@@ -13,6 +13,10 @@ use DateTimeImmutable;
 
 use function json_encode;
 
+/**
+ * @psalm-import-type WriteStrategy from \Pheature\Core\Toggle\Write\Strategy
+ * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\DbalSchema
+ */
 final class DbalFeatureRepository implements FeatureRepository
 {
     private const TABLE = 'pheature_toggles';
@@ -31,11 +35,11 @@ final class DbalFeatureRepository implements FeatureRepository
             $this->connection->insert(
                 self::TABLE,
                 [
-                'feature_id' => $feature->id(),
-                'name' => $feature->id(),
-                'enabled' => (int)$feature->isEnabled(),
-                'strategies' => json_encode($feature->strategies(), JSON_THROW_ON_ERROR),
-                'created_at' => $now->format('Y-m-d H:i:s'),
+                    'feature_id' => $feature->id(),
+                    'name' => $feature->id(),
+                    'enabled' => (int)$feature->isEnabled(),
+                    'strategies' => json_encode($feature->strategies(), JSON_THROW_ON_ERROR),
+                    'created_at' => $now->format('Y-m-d H:i:s'),
                 ]
             );
             return;
@@ -44,12 +48,12 @@ final class DbalFeatureRepository implements FeatureRepository
         $this->connection->update(
             self::TABLE,
             [
-            'enabled' => (int)$feature->isEnabled(),
-            'strategies' => json_encode($feature->strategies(), JSON_THROW_ON_ERROR),
-            'updated_at' => $now->format('Y-m-d H:i:s'),
+                'enabled' => (int)$feature->isEnabled(),
+                'strategies' => json_encode($feature->strategies(), JSON_THROW_ON_ERROR),
+                'updated_at' => $now->format('Y-m-d H:i:s'),
             ],
             [
-            'feature_id' => $feature->id(),
+                'feature_id' => $feature->id(),
             ]
         );
     }
@@ -75,8 +79,7 @@ final class DbalFeatureRepository implements FeatureRepository
     }
 
     /**
-     * @param string $id
-     * @return array<string, string>|null
+     * @return DbalFeature|null
      * @throws \Doctrine\DBAL\Exception
      */
     private function findFeature(string $id): ?array
@@ -87,7 +90,7 @@ final class DbalFeatureRepository implements FeatureRepository
         SQL;
 
         $statement = $this->connection->executeQuery($sql, ['feature_id' => $id]);
-        /** @var array<string, string> $result */
+        /** @var DbalFeature|false $result */
         $result = $statement->fetchAssociative();
 
         return $result ?: null;
