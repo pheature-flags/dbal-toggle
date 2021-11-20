@@ -12,6 +12,10 @@ use Pheature\Model\Toggle\Feature;
 use function array_map;
 use function json_decode;
 
+/**
+ * @psalm-import-type WriteStrategy from \Pheature\Core\Toggle\Write\Strategy
+ * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\DbalSchema
+ */
 final class DbalFeatureFactory
 {
     private const MAX_DEPTH = 512;
@@ -22,29 +26,21 @@ final class DbalFeatureFactory
         $this->strategyFactory = $strategyFactory;
     }
 
-    /**
-     * @param array<string, string|bool|array<string, mixed>> $data
-     * @return IFeature
-     */
+    /** @param DbalFeature $data */
     public function create(array $data): IFeature
     {
-        /** @var string $id */
-        $id = $data['feature_id'];
-        $enabled = (bool)$data['enabled'];
-        /** @var string $jsonStrategies */
-        $jsonStrategies = $data['strategies'];
-        /** @var array<string, array<string, mixed>> $strategies */
-        $strategies = json_decode($jsonStrategies, true, self::MAX_DEPTH, JSON_THROW_ON_ERROR);
+        /** @var WriteStrategy[] $strategies */
+        $strategies = json_decode($data['strategies'], true, self::MAX_DEPTH, JSON_THROW_ON_ERROR);
 
         return new Feature(
-            $id,
+            $data['feature_id'],
             new ToggleStrategies(
                 ...array_map(
                     fn(array $strategy) => $this->strategyFactory->createFromArray($strategy),
                     $strategies
                 )
             ),
-            $enabled
+            (bool)$data['enabled']
         );
     }
 }

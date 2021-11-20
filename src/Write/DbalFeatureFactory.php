@@ -17,34 +17,37 @@ use Pheature\Core\Toggle\Write\StrategyType;
 use function array_map;
 use function json_decode;
 
+/**
+ * @psalm-import-type WriteStrategy from \Pheature\Core\Toggle\Write\Strategy
+ * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\DbalSchema
+ */
 final class DbalFeatureFactory
 {
     /**
-     * @param  array<string, string> $featureData
+     * @param DbalFeature $featureData
      * @return Feature
      */
     public static function createFromDbalRepresentation(array $featureData): Feature
     {
-        /** @var array<string, mixed> $strategiesData */
+        /** @var WriteStrategy[] $strategiesData */
         $strategiesData = json_decode($featureData['strategies'], true, 12, JSON_THROW_ON_ERROR);
         /** @var callable $strategyCallback */
         $strategyCallback = static function (array $strategy): Strategy {
+            /** @var WriteStrategy $strategy */
             $segments = array_map(
                 static function (array $segment): Segment {
-                    /** @var array<string, mixed> $criteria */
-                    $criteria = $segment['criteria'];
                     return new Segment(
-                        SegmentId::fromString((string)$segment['segment_id']),
-                        SegmentType::fromString((string)$segment['segment_type']),
-                        Payload::fromArray($criteria)
+                        SegmentId::fromString($segment['segment_id']),
+                        SegmentType::fromString($segment['segment_type']),
+                        Payload::fromArray($segment['criteria'])
                     );
                 },
-                (array)$strategy['segments']
+                $strategy['segments']
             );
 
             return new Strategy(
-                StrategyId::fromString((string)$strategy['strategy_id']),
-                StrategyType::fromString((string)$strategy['strategy_type']),
+                StrategyId::fromString($strategy['strategy_id']),
+                StrategyType::fromString($strategy['strategy_type']),
                 $segments
             );
         };

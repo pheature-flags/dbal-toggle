@@ -14,6 +14,9 @@ use function array_map;
 use function is_array;
 use function sprintf;
 
+/**
+ * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\DbalSchema
+ */
 final class DbalFeatureFinder implements FeatureFinder
 {
     private Connection $connection;
@@ -33,7 +36,7 @@ final class DbalFeatureFinder implements FeatureFinder
 
         $statement = $this->connection->executeQuery($sql, ['feature_id' => $featureId]);
 
-        /** @var array<string, array<string, mixed>|bool|string>|null $feature */
+        /** @var DbalFeature|false $feature */
         $feature = $statement->fetchAssociative();
         if (false === is_array($feature)) {
             throw new InvalidArgumentException(sprintf('Not feature found for given id %s', $featureId));
@@ -55,22 +58,18 @@ final class DbalFeatureFinder implements FeatureFinder
 
         $statement = $this->connection->executeQuery($sql);
 
-        $features = $this->fetchFeatures($statement);
-
-        /** @psalm-var array<array<string, array<string, mixed>|bool|string>> $features */
         return array_map(
-            /** @param array<string, array<string, mixed>|bool|string> $feature */
             fn(array $feature) => $this->featureFactory->create($feature),
-            $features
+            $this->fetchFeatures($statement)
         );
     }
 
     /**
-     * @return array<array<string, array<string, mixed>|bool|string>>
+     * @return DbalFeature[]
      */
     private function fetchFeatures(Result $statement): array
     {
-        /** @var array<array<string, array<string, mixed>|bool|string>> $result */
+        /** @var DbalFeature[] $result */
         $result = $statement->fetchAllAssociative();
 
         return $result;
