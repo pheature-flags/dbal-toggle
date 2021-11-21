@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.0](https://github.com/pheature-flags/dbal-toggle/tree/0.3.0) (2021-11-21)
+
+[Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/0.2.0...0.3.0)
+
+**Implemented enhancements:**
+
+- \[dbal-toggle\] Update PhpStan to version 1 and level 9 [\#8](https://github.com/pheature-flags/dbal-toggle/issues/8)
+- \[dbal-toggle\] Add PHP 8.1 support [\#6](https://github.com/pheature-flags/dbal-toggle/issues/6)
+- \[\#6\] Add support for PHP 8.1 [\#12](https://github.com/pheature-flags/dbal-toggle/pull/12) (@kpicaza)
+- \[\#8\] Update PhpStan to version 1 and level 9 [\#9](https://github.com/pheature-flags/dbal-toggle/pull/9) (@kpicaza)
+
+**Closed issues:**
+
+- \[dbal-toggle\] update CI matrix PHP versions [\#10](https://github.com/pheature-flags/dbal-toggle/issues/10)
+
+**Merged pull requests:**
+
+- \[\#10\] Run CI both PHP 7.4 and 8.0 [\#11](https://github.com/pheature-flags/dbal-toggle/pull/11) (@kpicaza)
+
 ## [0.2.0](https://github.com/pheature-flags/dbal-toggle/tree/0.2.0) (2021-10-08)
 
 [Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/v0.1.2...0.2.0)
