@@ -10,7 +10,7 @@
 
 ## Installation
 
-Describe package installation
+Install it using [composer package manager](https://getcomposer.org/download/).
 
 ```php
 composer require pheature/dbal-toggle
