@@ -45,6 +45,7 @@ final class DbalSchema
             ]
         );
         $table->addColumn('enabled', 'boolean');
+        /** @psalm-suppress DeprecatedMethod */
         if ('sqlite' === $this->platform->getName()) {
             $table->addColumn(
                 'strategies',
