@@ -28,6 +28,6 @@ final class ConfigProviderTest extends TestCase
     {
         $actual = (new ConfigProvider())->__invoke();
 
-        self::assertSame(self::EXPECTED_CONFIG, $actual);
+        $this->assertSame(self::EXPECTED_CONFIG, $actual);
     }
 }

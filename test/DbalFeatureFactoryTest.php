@@ -25,7 +25,7 @@ final class DbalFeatureFactoryTest extends TestCase
         );
         $factory = new DbalFeatureFactory($strategyFactory);
         $feature = $factory->create($featureData);
-        self::assertInstanceOf(Feature::class, $feature);
+        $this->assertInstanceOf(Feature::class, $feature);
     }
 
     public function getFeatureData(): array
