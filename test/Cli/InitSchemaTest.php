@@ -45,14 +45,14 @@ class InitSchemaTest extends TestCase
         }
         $initSchema = new InitSchema(new DbalSchema($connection));
 
-        self::assertSame('pheature:dbal:init-toggle', $initSchema->getName());
-        self::assertSame('Create Pheature toggles database schema.', $initSchema->getDescription());
+        $this->assertSame('pheature:dbal:init-toggle', $initSchema->getName());
+        $this->assertSame('Create Pheature toggles database schema.', $initSchema->getDescription());
 
         $input = $this->createMock(InputInterface::class);
         $output = $this->createMock(OutputInterface::class);
         $output->expects(self::once())
             ->method('writeLn')
             ->with('<info>Pheature Toggle database schema successfully created.</info>');
-        self::assertSame(0, $initSchema->run($input, $output));
+        $this->assertSame(0, $initSchema->run($input, $output));
     }
 }

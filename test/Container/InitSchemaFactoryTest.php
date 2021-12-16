@@ -39,7 +39,7 @@ class InitSchemaFactoryTest extends TestCase
             ->willReturn($connection);
         $factory = new InitSchemaFactory();
         $initSchema = $factory($container);
-        self::assertInstanceOf(InitSchema::class, $initSchema);
+        $this->assertInstanceOf(InitSchema::class, $initSchema);
     }
 
     public function testItShouldCreateInstanceOfInitSchemaStatically(): void
@@ -61,6 +61,6 @@ class InitSchemaFactoryTest extends TestCase
         }
 
         $initSchema = InitSchemaFactory::create($connection);
-        self::assertInstanceOf(InitSchema::class, $initSchema);
+        $this->assertInstanceOf(InitSchema::class, $initSchema);
     }
 }
