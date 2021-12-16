@@ -64,9 +64,9 @@ class DbalFeatureFinderTest extends TestCase
 
         $finder = new DbalFeatureFinder($connection, new DbalFeatureFactory($strategyFactory));
         $feature = $finder->get(self::FEATURE_ID);
-        self::assertSame(self::FEATURE_ID, $feature->id());
-        self::assertSame(true, $feature->isEnabled());
-        self::assertSame(0, $feature->strategies()->count());
+        $this->assertSame(self::FEATURE_ID, $feature->id());
+        $this->assertTrue($feature->isEnabled());
+        $this->assertSame(0, $feature->strategies()->count());
     }
 
     public function testItShouldFindAllFeaturesFromDatabase(): void
@@ -99,6 +99,6 @@ class DbalFeatureFinderTest extends TestCase
 
         $finder = new DbalFeatureFinder($connection, new DbalFeatureFactory($strategyFactory));
         $features = $finder->all();
-        self::assertCount(2, $features);
+        $this->assertCount(2, $features);
     }
 }

@@ -14,7 +14,7 @@ final class DbalFeatureFactoryTest extends TestCase
     public function testItShouldCreateInstancesOfFeatureFromDatabaseRepresentation(array $featureData, int $expectedStrategies): void
     {
         $feature = DbalFeatureFactory::createFromDbalRepresentation($featureData);
-        self::assertCount($expectedStrategies, $feature->strategies());
+        $this->assertCount($expectedStrategies, $feature->strategies());
     }
 
     public function getSomeFeatures(): Generator
