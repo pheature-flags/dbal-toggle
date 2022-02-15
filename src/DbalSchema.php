@@ -63,7 +63,7 @@ final class DbalSchema
             ]
         );
         $table->addColumn('enabled', 'boolean');
-        if ('sqlite' === $this->platform->getName()) {
+        if ($this->isSqlite()) {
             $table->addColumn(
                 'strategies',
                 'json',
@@ -97,5 +97,36 @@ final class DbalSchema
         }
 
         return true;
+    }
+
+    private function isSqlite(): bool
+    {
+        $driver = $this->connection->getDriver();
+
+        if (
+            class_exists(\Doctrine\DBAL\Driver\PDOSqlite\Driver::class)
+            && $driver instanceof \Doctrine\DBAL\Driver\PDOSqlite\Driver
+        ) {
+            return true;
+        }
+
+        if (
+            class_exists(\Doctrine\DBAL\Driver\PDO\SQLite\Driver::class)
+            && $driver instanceof \Doctrine\DBAL\Driver\PDO\SQLite\Driver
+        ) {
+            return true;
+        }
+
+        if (
+            class_exists(\Doctrine\DBAL\Driver::class)
+            && $driver instanceof \Doctrine\DBAL\Driver
+        ) {
+            /**
+             * @psalm-suppress DeprecatedMethod
+             */
+            return 'sqlite' === $driver->getDatabasePlatform()->getName();
+        }
+
+        return false;
     }
 }
