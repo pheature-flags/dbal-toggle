@@ -34,7 +34,8 @@ final class InitSchema extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->dbalSchema->__invoke($input->getOption('init-if-not-exists') ?? false);
+        $initializeIfNotExists = (bool)$input->getOption('init-if-not-exists');
+        $this->dbalSchema->__invoke($initializeIfNotExists);
 
         $output->writeln('<info>Pheature Toggle database schema successfully created.</info>');
 
