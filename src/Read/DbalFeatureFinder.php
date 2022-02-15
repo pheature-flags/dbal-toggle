@@ -6,13 +6,12 @@ namespace Pheature\Dbal\Toggle\Read;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Result;
-use InvalidArgumentException;
 use Pheature\Core\Toggle\Read\Feature;
 use Pheature\Core\Toggle\Read\FeatureFinder;
+use Pheature\Dbal\Toggle\Exception\DbalFeatureNotFound;
 
 use function array_map;
 use function is_array;
-use function sprintf;
 
 /**
  * @psalm-import-type DbalFeature from \Pheature\Dbal\Toggle\Read\DbalFeatureFactory
@@ -39,7 +38,7 @@ final class DbalFeatureFinder implements FeatureFinder
         /** @var DbalFeature|false $feature */
         $feature = $statement->fetchAssociative();
         if (false === is_array($feature)) {
-            throw new InvalidArgumentException(sprintf('Not feature found for given id %s', $featureId));
+            throw DbalFeatureNotFound::withId($featureId);
         }
 
         return $this->featureFactory->create($feature);
