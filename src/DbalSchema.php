@@ -7,9 +7,11 @@ namespace Pheature\Dbal\Toggle;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\DBAL\Schema\SchemaConfig;
 
 final class DbalSchema
 {
+    private const TABLE_NAME = 'pheature_toggles';
     private Schema $schema;
     private AbstractPlatform $platform;
     private Connection $connection;
@@ -26,14 +28,30 @@ final class DbalSchema
         $this->connection = $connection;
     }
 
-    public function __invoke(): void
+    public function __invoke(bool $initializeIfNotExists): void
     {
-        $table = $this->schema->createTable('pheature_toggles');
+        if (!$this->shouldBeExecuted($initializeIfNotExists)) {
+            return;
+        }
+
+        $this->createPheatureTogglesTable();
+
+        $queries = $this->schema->toSql($this->platform);
+        foreach ($queries as $query) {
+            if (false !== strpos($query, self::TABLE_NAME)) {
+                $this->connection->executeQuery($query);
+            }
+        }
+    }
+
+    private function createPheatureTogglesTable(): void
+    {
+        $table = $this->schema->createTable(self::TABLE_NAME);
         $table->addColumn(
             'feature_id',
             'string',
             [
-            'length' => 36,
+                'length' => 36,
             ]
         );
         $table->setPrimaryKey(['feature_id']);
@@ -41,7 +59,7 @@ final class DbalSchema
             'name',
             'string',
             [
-            'length' => 140,
+                'length' => 140,
             ]
         );
         $table->addColumn('enabled', 'boolean');
@@ -50,7 +68,7 @@ final class DbalSchema
                 'strategies',
                 'json',
                 [
-                'default' => '[]'
+                    'default' => '[]'
                 ]
             );
         } else {
@@ -62,16 +80,22 @@ final class DbalSchema
             'updated_at',
             'datetime_immutable',
             [
-            'notnull' => false,
-            'default' => null,
+                'notnull' => false,
+                'default' => null,
             ]
         );
+    }
 
-        $queries = $this->schema->toSql($this->platform);
-        foreach ($queries as $query) {
-            if (false !== strpos($query, 'pheature_toggles')) {
-                $this->connection->executeQuery($query);
-            }
+    private function shouldBeExecuted(bool $initializeIfNotExists): bool
+    {
+        if (!$initializeIfNotExists) {
+            return true;
         }
+
+        if ($this->schema->hasTable(self::TABLE_NAME)) {
+            return false;
+        }
+
+        return true;
     }
 }
