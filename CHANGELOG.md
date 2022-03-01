@@ -1,5 +1,24 @@
 # Changelog
 
+## [v0.3.1](https://github.com/pheature-flags/dbal-toggle/tree/v0.3.1) (2022-03-01)
+
+[Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/0.3.0...v0.3.1)
+
+**Implemented enhancements:**
+
+- \[dbal-toggle\] Add CLI option to InitSchema to create schema if not exists [\#17](https://github.com/pheature-flags/dbal-toggle/issues/17)
+- \[dbal-toggle\] Update issue template for bugs using new issue form in a YAML file [\#3](https://github.com/pheature-flags/dbal-toggle/issues/3)
+- \[\#17\]\[dbal-toggle\] Add CLI option to InitSchema to create schema if not exists [\#18](https://github.com/pheature-flags/dbal-toggle/pull/18) (@xserrat)
+
+**Fixed bugs:**
+
+- \[dbal-toggle\] Throw DbalFeatureNotFound exception instead of InvalidArgumentException [\#19](https://github.com/pheature-flags/dbal-toggle/issues/19)
+- \[\#19\]\[dbal-toggle\] Throw DbalFeatureNotFound exception instead of InvalidArgumentException [\#20](https://github.com/pheature-flags/dbal-toggle/pull/20) (@xserrat)
+
+**Merged pull requests:**
+
+- \[\#3\] Update Bug Report Template [\#14](https://github.com/pheature-flags/dbal-toggle/pull/14) (@pcs289)
+
 ## [0.3.0](https://github.com/pheature-flags/dbal-toggle/tree/0.3.0) (2021-11-21)
 
 [Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/0.2.0...0.3.0)
