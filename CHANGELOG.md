@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased](https://github.com/pheature-flags/dbal-toggle/tree/HEAD)
+
+[Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/v0.3.1...HEAD)
+
+**Merged pull requests:**
+
+- allow executing some composer plugins in dev mode [\#21](https://github.com/pheature-flags/dbal-toggle/pull/21) (@kpicaza)
+
 ## [v0.3.1](https://github.com/pheature-flags/dbal-toggle/tree/v0.3.1) (2022-03-01)
 
 [Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/0.3.0...v0.3.1)
