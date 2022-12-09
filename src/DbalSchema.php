@@ -19,7 +19,7 @@ final class DbalSchema
     public function __construct(Connection $connection)
     {
         if (method_exists($connection, 'createSchemaManager')) {
-            $this->schema = $connection->createSchemaManager()->createSchema();
+            $this->schema = $connection->createSchemaManager()->introspectSchema();
         } else {
             /** @psalm-suppress DeprecatedMethod */
             $this->schema = $connection->getSchemaManager()->createSchema();

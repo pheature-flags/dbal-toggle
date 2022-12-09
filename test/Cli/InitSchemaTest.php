@@ -24,17 +24,20 @@ class InitSchemaTest extends TestCase
             ->method('createTable')
             ->with('pheature_toggles')
             ->willReturn($this->createMock(Table::class));
-        $schemaManager = $this->createConfiguredMock(AbstractSchemaManager::class, [
-            'createSchema' => $schema,
-        ]);
         $platform = $this->createMock(AbstractPlatform::class);
 
         if (method_exists(Connection::class, 'createSchemaManager')) {
+            $schemaManager = $this->createConfiguredMock(AbstractSchemaManager::class, [
+                'introspectSchema' => $schema,
+            ]);
             $connection = $this->createConfiguredMock(Connection::class, [
                 'createSchemaManager' => $schemaManager,
                 'getDatabasePlatform' => $platform,
             ]);
         } else {
+            $schemaManager = $this->createConfiguredMock(AbstractSchemaManager::class, [
+                'createSchema' => $schema,
+            ]);
             $connection = $this->createConfiguredMock(Connection::class, [
                 'getSchemaManager' => $schemaManager,
                 'getDatabasePlatform' => $platform,

@@ -53,7 +53,7 @@ class DbalSchemaTest extends TestCase
         $schema = new DbalSchema($this->connection);
 
         $this->expectException(SchemaException::class);
-        $this->expectExceptionMessage("The table with name 'public.pheature_toggles' already exists.");
+        $this->expectExceptionMessage('The table with name "public.pheature_toggles" already exists.');
 
         $initializeIfNotExists = false;
         $schema($initializeIfNotExists);
