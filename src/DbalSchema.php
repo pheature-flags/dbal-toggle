@@ -99,10 +99,16 @@ final class DbalSchema
         return true;
     }
 
+    /**
+     * @psalm-suppress MixedInferredReturnType
+     */
     private function isSqlite(): bool
     {
         $driver = $this->connection->getDriver();
 
+        /**
+         * @psalm-suppress UndefinedClass
+         */
         if (
             class_exists(\Doctrine\DBAL\Driver\PDOSqlite\Driver::class)
             && $driver instanceof \Doctrine\DBAL\Driver\PDOSqlite\Driver
