@@ -1,6 +1,19 @@
 # Changelog
 
-## [0.7.1](https://github.com/pheature-flags/dbal-toggle/tree/0.7.1)
+## [0.8.0](https://github.com/pheature-flags/dbal-toggle/tree/0.8.0)
+
+[Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/0.7.1...0.8.0)
+
+**Implemented enhancements:**
+
+- Improve assertion method call and fix Psalm issue [\#33](https://github.com/pheature-flags/dbal-toggle/pull/33) (@kpicaza)
+
+**Merged pull requests:**
+
+- update psalm to 5.16 [\#34](https://github.com/pheature-flags/dbal-toggle/pull/34) (@kpicaza)
+- update php versions support [\#32](https://github.com/pheature-flags/dbal-toggle/pull/32) (@kpicaza)
+
+## [0.7.1](https://github.com/pheature-flags/dbal-toggle/tree/0.7.1) (2022-12-12)
 
 [Full Changelog](https://github.com/pheature-flags/dbal-toggle/compare/0.7.0...0.7.1)
 
